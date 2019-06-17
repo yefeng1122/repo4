@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="day01_mabatis_duobiao:war">
+    <output-path>$PROJECT_DIR$/day01_mabatis_duobiao/target</output-path>
+    <root id="archive" name="day01_mabatis_duobiao-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="day01_mabatis_duobiao:war exploded" />
+    </root>
+  </artifact>
+</component>
