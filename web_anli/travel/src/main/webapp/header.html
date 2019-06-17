@@ -1,0 +1,95 @@
+<!-- 头部 start -->
+<!--<script src="./js/jquery-1.11.0.min.js"></script>-->
+    <!--引入获取参数的js  getParameter-->
+    <script src="js/getParameter.js"></script>
+    <script>
+        $(function () {
+            //发送异步请求获取已经登录的用户
+            $.get("/travel/user/getInSession",{},function (data) {
+                $("#user").html("欢迎回来，"+data.name);
+                //alert(data);
+            });
+            //发送异步请求到获取所有线路的分类，并添加到对应的标签中
+            $.get("/travel/category/findAll",{},function (data) {
+                //1.定义标签体字符串 先加头 li标签会默认换行 先拼头
+                var str = '<li class="nav-active"><a href="index.html">首页</a></li>';
+                //2.遍历date，拼接字符串，cid用于线路的分页查询
+                //data[{cid:xx,cname:xx},{},{}]
+                for (var i = 0; i < data.length; i++) {
+                    str += '<li><a href="route_list.html?cid='+data[i].cid+'">'+data[i].cname+'</a></li>';
+                }
+                //3.拼尾
+                str += '<li><a href="favoriterank.html">收藏排行榜</a></li>';
+                //4.将拼好的标签加到ul标签体中 用于显示
+                $("#category").html(str);
+            });
+            //为搜索按钮绑定单击事件
+            $("#but_search").click(function () {
+                //获取搜索框的内容
+                var rname = $("#search_input").val();
+                //获取当前页的cid
+                var cid = getParameter("cid");
+                //跳转网页到route_list.html  ,使用以上参数发送异步请求 来获取相应的搜索结果，并展示
+                //注意：tomcat7  get请求  url含中文会乱码  所以转到该route_list.html后，需要url解码
+                //alert(rname);
+                //alert(cid);
+                location.href="/travel/route_list.html?cid="+cid+"&rname="+rname+"";
+            });
+        });
+    </script>
+    <header id="header">
+        <div class="top_banner">
+            <img src="images/top_banner.jpg" alt="">
+        </div>
+        <div class="shortcut">
+            <!-- 未登录状态  -->
+            <div class="login_out">
+                <a href="login.html">登录</a>
+                <a href="register.html">注册</a>
+            </div>
+            <!-- 登录状态  -->
+            <div class="login">
+            	
+                <span id="user">欢迎回来，admin</span>
+                <a href="myfavorite.html" class="collection">我的收藏</a>
+                <a href="/travel/user/exit">退出</a>
+            </div>
+        </div>
+        <div class="header_wrap">
+            <div class="topbar">
+                <div class="logo">
+                    <a href="/"><img src="images/logo.jpg" alt=""></a>
+                </div>
+                <div class="search">
+                    <input id="search_input" name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
+                    <a href="javascript:;" class="search-button" id="but_search">搜索</a>
+                </div>
+                <div class="hottel">
+                    <div class="hot_pic">
+                        <img src="images/hot_tel.jpg" alt="">
+                    </div>
+                    <div class="hot_tel">
+                        <p class="hot_time">客服热线(9:00-6:00)</p>
+                        <p class="hot_num">400-618-9090</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 头部 end -->
+     <!-- 首页导航 -->
+    <div class="navitem">
+        <ul id="category" class="nav">
+            <!--<li class="nav-active"><a href="index.html">首页</a></li>-->
+            <!--<li><a href="route_list.html">门票</a></li>-->
+            <!--<li><a href="route_list.html">酒店</a></li>-->
+            <!--<li><a href="route_list.html">香港车票</a></li>-->
+            <!--<li><a href="route_list.html">出境游</a></li>-->
+            <!--<li><a href="route_list.html">国内游</a></li>-->
+            <!--<li><a href="route_list.html">港澳游</a></li>-->
+            <!--<li><a href="route_list.html">抱团定制</a></li>-->
+            <!--<li><a href="route_list.html">全球自由行</a></li>-->
+            <!--<li><a href="favoriterank.html">收藏排行榜</a></li>-->
+        </ul>
+    </div>
+    
